@@ -1,10 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./Home";
-import { AnimalCard } from "./animal/AnimalCard";
+// import { AnimalCard } from "./animal/AnimalCard";
 import { LocationCard } from "./location/LocationCard";
 import { CustomerCard } from "./customer/CustomerCard";
 import { EmployeeCard } from "./employee/EmployeeCard";
+import { AnimalProvider } from "./animal/AnimalProvider";
+import { AnimalList } from "./animal/AnimalList";
 
 export const ApplicationViews = () => (
   <Routes>
@@ -12,7 +14,8 @@ export const ApplicationViews = () => (
     <Route exact path="/" element={<Home/>} />
 
     {/* Render the animal list when http://localhost:3000/animals */}
-    <Route path="/animals" element={<AnimalCard />} />
+    <Route path="/animals" element={<AnimalProvider><AnimalList /></AnimalProvider>} />
+    
 
     {/* Render the location list when http://localhost:3000/locations */}
     <Route path="/locations" element={<LocationCard />} />
