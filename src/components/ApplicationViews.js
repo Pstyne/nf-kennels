@@ -9,6 +9,7 @@ import { LocationList } from "./location/LocationList";
 import { EmployeeList } from "./employee/EmployeeList";
 import { EmployeeProvider } from "./employee/EmployeeProvider";
 import { LocationProvider } from "./location/LocationProvider";
+import { AnimalForm } from "./animal/AnimalForm";
 
 export const ApplicationViews = () => (
   // If using react-router-dom v6 wrap each Route with a Routes component
@@ -23,7 +24,7 @@ export const ApplicationViews = () => (
 
             {/* Render the animal list when http://localhost:3000/animals */}
             <Route path="/animals" element={<AnimalList />} />
-            
+            <Route path="/animals/create" element={<AnimalForm />} />
 
             {/* Render the location list when http://localhost:3000/locations */}
             <Route path="/locations" element={<LocationList />} />
