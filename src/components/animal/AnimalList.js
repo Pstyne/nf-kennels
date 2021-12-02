@@ -25,9 +25,9 @@ export const AnimalList = () => {
   return (
     <>
       <h2>Animals</h2>
-        <button onClick={() => {navigate('/animals/create')}}>
-          Add Animal
-        </button>
+      <button onClick={() => {navigate('/animals/create')}}>
+        Add Animal
+      </button>
       <div className="animals">
         {console.log("AnimalList: Render", animals)}
         {

@@ -10,6 +10,8 @@ import { EmployeeList } from "./employee/EmployeeList";
 import { EmployeeProvider } from "./employee/EmployeeProvider";
 import { LocationProvider } from "./location/LocationProvider";
 import { AnimalForm } from "./animal/AnimalForm";
+import { EmployeeForm } from "./employee/EmployeeForm";
+import { LocationForm } from "./location/LocationForm";
 
 export const ApplicationViews = () => (
   // If using react-router-dom v6 wrap each Route with a Routes component
@@ -28,12 +30,14 @@ export const ApplicationViews = () => (
 
             {/* Render the location list when http://localhost:3000/locations */}
             <Route path="/locations" element={<LocationList />} />
+            <Route path="/locations/create" element={<LocationForm />} />
 
             {/* Render the customer list when http://localhost:3000/customers */}
             <Route path="/customers" element={<CustomerList />} />
 
             {/* Render the employee list when http://localhost:3000/employees */}
             <Route path="/employees" element={<EmployeeList />} />
+            <Route path="/employees/create" element={<EmployeeForm />} />
           </Routes>
         </LocationProvider>
       </EmployeeProvider>
