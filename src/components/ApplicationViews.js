@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { Home } from "./Home";
 import { AnimalProvider } from "./animal/AnimalProvider";
 import { AnimalList } from "./animal/AnimalList";
@@ -12,8 +12,10 @@ import { LocationProvider } from "./location/LocationProvider";
 import { AnimalForm } from "./animal/AnimalForm";
 import { EmployeeForm } from "./employee/EmployeeForm";
 import { LocationForm } from "./location/LocationForm";
+import { AnimalDetail } from "./animal/AnimalDetail";
 
-export const ApplicationViews = () => (
+export const ApplicationViews = () => {
+  return (
   // If using react-router-dom v6 wrap each Route with a Routes component
   // Set the route element to Provider component that wraps List component
   <AnimalProvider>
@@ -26,7 +28,9 @@ export const ApplicationViews = () => (
 
             {/* Render the animal list when http://localhost:3000/animals */}
             <Route path="/animals" element={<AnimalList />} />
+            <Route path="/animals/detail/:animalId" element={<AnimalDetail />} />
             <Route path="/animals/create" element={<AnimalForm />} />
+            
 
             {/* Render the location list when http://localhost:3000/locations */}
             <Route path="/locations" element={<LocationList />} />
@@ -38,9 +42,10 @@ export const ApplicationViews = () => (
             {/* Render the employee list when http://localhost:3000/employees */}
             <Route path="/employees" element={<EmployeeList />} />
             <Route path="/employees/create" element={<EmployeeForm />} />
+            
           </Routes>
         </LocationProvider>
       </EmployeeProvider>
     </CustomerProvider>
   </AnimalProvider>
-);
+)};
