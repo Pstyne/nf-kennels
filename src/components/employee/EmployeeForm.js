@@ -38,6 +38,9 @@ export const EmployeeForm = () => {
     /* Employee is an object with properties.
     Set the property to the new value
     using object bracket notation. */
+    // newEmployee.name || newEmployee.locationId
+    // newEmployee['name'] || newEmployee['locationId']
+    // If the value is able to be parsed to integer then go ahead and set that to the state otherwise leave it as string
     newEmployee[event.target.id] = parseInt(event.target.value) ? parseInt(event.target.value) : event.target.value;
     // update state
     setEmployee(newEmployee);

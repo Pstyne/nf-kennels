@@ -14,6 +14,7 @@ import { EmployeeForm } from "./employee/EmployeeForm";
 import { LocationForm } from "./location/LocationForm";
 import { AnimalDetail } from "./animal/AnimalDetail";
 import { EmployeeDetail } from "./employee/EmployeeDetail";
+import { LocationDetail } from "./location/LocationDetail";
 
 export const ApplicationViews = () => {
   return (
@@ -35,6 +36,7 @@ export const ApplicationViews = () => {
 
             {/* Render the location list when http://localhost:3000/locations */}
             <Route path="/locations" element={<LocationList />} />
+            <Route path="/locations/detail/:locationId" element={<LocationDetail />} />
             <Route path="/locations/create" element={<LocationForm />} />
 
             {/* Render the customer list when http://localhost:3000/customers */}
