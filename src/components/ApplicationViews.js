@@ -47,6 +47,7 @@ export const ApplicationViews = () => {
             {/* Render the employee list when http://localhost:3000/employees */}
             <Route path="/employees" element={<EmployeeList />} />
             <Route path="/employees/detail/:employeeId" element={<EmployeeDetail />} />
+            <Route path="/employees/edit/:employeeId" element={<EmployeeForm />} />
             <Route path="/employees/create" element={<EmployeeForm />} />
             
           </Routes>

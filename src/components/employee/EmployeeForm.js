@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { LocationContext } from "../location/LocationProvider";
 import { EmployeeContext } from "../employee/EmployeeProvider";
 import "./Employee.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const EmployeeForm = () => {
-  const { addEmployee } = useContext(EmployeeContext);
+  const { addEmployee, updateEmployee, getEmployeeById } = useContext(EmployeeContext);
   const { locations, getLocations } = useContext(LocationContext);
-
+  const { employeeId } = useParams();
   /*
   With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
 
@@ -26,7 +26,11 @@ export const EmployeeForm = () => {
   and locations state on initialization.
   */
   useEffect(() => {
-    getLocations();
+    getLocations().then(() => {
+      if (employeeId) {
+        getEmployeeById(employeeId).then(setEmployee)
+      }
+    });
   }, []);
 
   //when a field changes, update state. The return will re-render and display based on the values in state
@@ -56,8 +60,14 @@ export const EmployeeForm = () => {
     } else {
       //invoke addEmployee passing employee as an argument.
       //once complete, change the url and display the employee list
-      addEmployee(employee)
-      .then(() => navigate("/employees"));
+
+      if (employeeId) {
+        updateEmployee(employee)
+        .then(() => navigate(`/employees/detail/${employeeId}`));
+      } else {
+        addEmployee(employee)
+        .then(() => navigate("/employees"));
+      }
     }
   }
 
@@ -67,13 +77,13 @@ export const EmployeeForm = () => {
       <fieldset>
         <div className="form-group">
           <label htmlFor="name">Employee name:</label>
-          <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Employee name" value={employee.name}/>
+          <input value={employee.name} type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Employee name" value={employee.name}/>
         </div>
       </fieldset>
       <fieldset>
         <div className="form-group">
           <label htmlFor="location">Assign to location: </label>
-          <select defaultValue={employee.locationId} onChange={handleControlledInputChange} name="locationId" id="locationId" className="form-control" >
+          <select value={employee.locationId} onChange={handleControlledInputChange} name="locationId" id="locationId" className="form-control" >
             <option value="0">Select a location</option>
             {locations.map(l => (
               <option key={l.id} value={l.id}>
