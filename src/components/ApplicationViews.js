@@ -31,6 +31,7 @@ export const ApplicationViews = () => {
             {/* Render the animal list when http://localhost:3000/animals */}
             <Route path="/animals" element={<AnimalList />} />
             <Route path="/animals/detail/:animalId" element={<AnimalDetail />} />
+            <Route path="/animals/edit/:animalId" element={<AnimalForm />} />
             <Route path="/animals/create" element={<AnimalForm />} />
             
 
