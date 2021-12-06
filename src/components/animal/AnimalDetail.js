@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { AnimalContext } from "./AnimalProvider";
 
 export const AnimalDetail = () => {
-  const { getAnimalById } = useContext(AnimalContext);
+  const { getAnimalById, releaseAnimal } = useContext(AnimalContext);
   const [ animal, setAnimal ] = useState({});
   const { animalId } = useParams();
   const navigate = useNavigate();
@@ -13,12 +13,18 @@ export const AnimalDetail = () => {
     getAnimalById(animalId).then(res => setAnimal(res));
   }, []);
 
+  const handleRelease = () => {
+    releaseAnimal(animal.id)
+    .then(navigate('/animals'));
+  }
+
   return (
     <section className="animal">
       <h3 className="animal__name">{animal.name}</h3>
       <div className="animal__breed">{animal.breed}</div>
       <div className="animal__location">Location: {animal.location?.name}</div>
       <div className="animal__owner">Customer: {animal.customer?.name}</div>
+      <button onClick={handleRelease}>Release Animal</button>
     </section>
   );
 }
