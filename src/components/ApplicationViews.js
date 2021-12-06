@@ -38,6 +38,7 @@ export const ApplicationViews = () => {
             {/* Render the location list when http://localhost:3000/locations */}
             <Route path="/locations" element={<LocationList />} />
             <Route path="/locations/detail/:locationId" element={<LocationDetail />} />
+            <Route path="/locations/edit/:locationId" element={<LocationForm />} />
             <Route path="/locations/create" element={<LocationForm />} />
 
             {/* Render the customer list when http://localhost:3000/customers */}
