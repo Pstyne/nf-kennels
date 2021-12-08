@@ -6,16 +6,21 @@ import "./Animal.css";
 
 export const AnimalList = () => {
   // This state changes when `getAnimals()` is invoked below
-  const { animals, getAnimals, searchTerms } = useContext(AnimalContext);
+  const { animals, getAnimals, searchTerms, filterSpecies } = useContext(AnimalContext);
   const [ filteredAnimals, setFiltered ] = useState([]);
 
   const navigate = useNavigate();
 
-  //useEffect - reach out to the world for something
+  // useEffect - reach out to the world for something
+  //* Control for unfiltered list of animals or simply all of the animals
   useEffect(() => {
     getAnimals();
   }, []);
 
+  /** 
+  **  This useEffect will utilize the animal search features using keywords
+  **  and return a list of animals by the name typed into search bar
+  */
   useEffect(() => {
     if (searchTerms !== "") {
       // If the search field is not blank, display matching animals
@@ -25,7 +30,22 @@ export const AnimalList = () => {
       // If the search field is blank, display all animals
       setFiltered(animals)
     }
-  }, [searchTerms, animals])
+  }, [searchTerms, animals]);
+
+  /**
+   ** This useEffect will utitlize the filter component
+   ** Whichever species the user chooses will render
+   ** any animal of that type into the list 
+   */
+
+  useEffect(() => {
+    if (filterSpecies !== 0) {
+      const animalSet = animals.filter(animal => animal.speciesId === filterSpecies);
+      setFiltered(animalSet);
+    } else {
+      setFiltered(animals);
+    }
+  }, [filterSpecies, animals]);
 
 
   return (

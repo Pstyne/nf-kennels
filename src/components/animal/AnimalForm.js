@@ -4,11 +4,13 @@ import { AnimalContext } from "../animal/AnimalProvider";
 import { CustomerContext } from "../customer/CustomerProvider";
 import "./Animal.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import { SpeciesContext } from "../species/SpeciesProvider";
 
 export const AnimalForm = () => {
   const { getAnimalById, addAnimal, updateAnimal } = useContext(AnimalContext);
   const { locations, getLocations } = useContext(LocationContext);
   const { customers, getCustomers } = useContext(CustomerContext);
+  const { species, getSpecies } = useContext(SpeciesContext);
   const { animalId } = useParams();
 
   /*
@@ -20,7 +22,8 @@ export const AnimalForm = () => {
   const [animal, setAnimal] = useState({
     name: "",
     locationId: 0,
-    customerId: 0
+    customerId: 0,
+    speciesId: 0
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +35,7 @@ export const AnimalForm = () => {
   and locations state on initialization.
   */
   useEffect(() => {
-    getCustomers().then(getLocations).then(() => {
+    getCustomers().then(getLocations).then(getSpecies).then(() => {
       if (animalId) {
         getAnimalById(animalId).then(animal => {
           setAnimal(animal);
@@ -63,10 +66,12 @@ export const AnimalForm = () => {
 
     const locationId = parseInt(animal.locationId);
     const customerId = parseInt(animal.customerId);
+    const speciesId = parseInt(animal.speciesId);
 
-    if (locationId === 0 || customerId === 0) {
+    if (locationId === 0 || customerId === 0 || speciesId === 0) {
       if (!locationId) window.alert("Please select a location");
       if (!customerId) window.alert("Please select a customer");
+      if (!speciesId) window.alert("Please select a species");
     } else {
 
       // Disable the save button while saving
@@ -90,6 +95,19 @@ export const AnimalForm = () => {
         <div className="form-group">
           <label htmlFor="name">Animal name:</label>
           <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Animal name" value={animal.name}/>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="speciesId">Species: </label>
+          <select value={animal.speciesId} onChange={handleControlledInputChange} name="speciesId" id="speciesId" className="form-control" >
+            <option value="0">Select a species</option>
+            {species.map(c => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
         </div>
       </fieldset>
       <fieldset>
