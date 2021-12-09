@@ -104,7 +104,7 @@ export const AnimalForm = () => {
             <option value="0">Select a species</option>
             {species.map(c => (
               <option key={c.id} value={c.id}>
-                {c.name}
+                {String.fromCodePoint(c.icon)} {c.name}
               </option>
             ))}
           </select>

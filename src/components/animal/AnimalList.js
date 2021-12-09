@@ -6,7 +6,7 @@ import "./Animal.css";
 
 export const AnimalList = () => {
   // This state changes when `getAnimals()` is invoked below
-  const { animals, getAnimals, searchTerms, filterSpecies } = useContext(AnimalContext);
+  const { animals, getAnimals, searchTerms, filterSpecies, isActive, setIsActive } = useContext(AnimalContext);
   const [ filteredAnimals, setFiltered ] = useState([]);
 
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const AnimalList = () => {
   //* Control for unfiltered list of animals or simply all of the animals
   useEffect(() => {
     getAnimals();
-  }, []);
+  }, [isActive]);
 
   /** 
   **  This useEffect will utilize the animal search features using keywords
@@ -54,6 +54,13 @@ export const AnimalList = () => {
       <button onClick={() => {navigate('/animals/create')}}>
         Make Reservation
       </button>
+       
+      <button onClick={() => setIsActive(!isActive)}>
+        View {
+          isActive ? 'Archived' : 'Active'
+        } Animals
+      </button> 
+        
       <div className="animals">
         {
           filteredAnimals.map(animal => {

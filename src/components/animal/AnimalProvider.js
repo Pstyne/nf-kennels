@@ -8,9 +8,10 @@ export const AnimalProvider = (props) => {
   const [animals, setAnimals] = useState([]);
   const [searchTerms, setSearchTerms] = useState("");
   const [filterSpecies, setFilterSpecies] = useState(0);
+  const [isActive, setIsActive] = useState(true);
 
   const getAnimals = () => {
-    return fetch("http://localhost:8088/animals?_expand=location&_expand=species")
+    return fetch(`http://localhost:8088/animals?_expand=location&_expand=customer&_expand=species&isActive=${isActive}`)
     .then(res => res.json())
     .then(setAnimals);
   }
@@ -27,13 +28,17 @@ export const AnimalProvider = (props) => {
   }
 
   const getAnimalById = id => {
-    return fetch(`http://localhost:8088/animals/${id}?_expand=location&_expand=customer`)
+    return fetch(`http://localhost:8088/animals/${id}?_expand=location&_expand=customer&_expand=species`)
     .then(res => res.json());
   }
 
   const releaseAnimal = id => {
     return fetch(`http://localhost:8088/animals/${id}`, {
-      method: "DELETE"
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({isActive: !isActive})
     }).then(getAnimals);
   }
 
@@ -57,7 +62,8 @@ export const AnimalProvider = (props) => {
     <AnimalContext.Provider value={{
       animals, getAnimals, addAnimal, getAnimalById,
       releaseAnimal, updateAnimal, searchTerms, setSearchTerms,
-      filterSpecies , setFilterSpecies
+      filterSpecies , setFilterSpecies,
+      isActive, setIsActive
     }}>
       {props.children}
     </AnimalContext.Provider>
